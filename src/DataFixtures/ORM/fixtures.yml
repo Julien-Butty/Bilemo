@@ -1,0 +1,91 @@
+App\Entity\Phone:
+
+    phone1:
+        brand: 'Apple'
+        Model: 'S8 plus'
+        plateform: 'ios'
+        color: 'grey'
+        weight: '202 g'
+        dimensions: '158.4 x 78.1 x 7.5 mm'
+        sim: 'Nano-SIM'
+        displaySize: '5.5 inches'
+        memory: '64/256 GB'
+        camera: '12 MP'
+
+    phone2:
+        brand: 'Samsung'
+        Model: 'A6+'
+        plateform: 'androïd'
+        color: 'Black, Gold, Blue, Lavender'
+        weight: '-'
+        dimensions: '160.2 x 75.7 x 7.9 mm'
+        sim: 'Nano-SIM'
+        displaySize: '6.0 inches'
+        memory: 'microSD, up to 256 GB'
+        camera: '16 MP'
+
+    phone3:
+        brand: 'Nokia'
+        Model: '8110 4G'
+        plateform: 'kaios'
+        color: 'Traditional Black, Banana Yellow'
+        weight: '117 g'
+        dimensions: '133.5 x 49.3 x 14.9 mm'
+        sim: 'Micro-SIM'
+        displaySize: '2.4 inches'
+        memory: 'microSD, up to 64 GB'
+        camera: '2 MP'
+
+
+App\Entity\Client:
+
+    client1:
+        username: 'fnak'
+        password: '123456'
+        email: 'julienbutty@gmail.com'
+
+    client2:
+        username: 'barty'
+        password: '654321'
+        email: 'julienbutty+1@gmail.com'
+
+    client3:
+        username: 'fonHouse'
+        password: '741852'
+        email: 'julienbutty+2@gmail.com'
+
+
+App\Entity\User:
+
+    user1:
+        firstName: 'Jean'
+        lastName: 'Tonic'
+        mail: 'julienbutty+21@gmail.com'
+        address: '45 av du 11 Novembre, 69290 Craponne'
+        phone: '0606060606'
+        client: '@client1'
+
+
+    user2:
+        firstName: 'Anne'
+        lastName: 'Bec'
+        mail: 'julienbutty+22@gmail.com'
+        address: '151 chemin des bois, 69280 Marcy'
+        phone: '0607060706'
+        client: '@client1'
+
+
+    user3:
+        firstName: 'Aude'
+        lastName: 'Javel'
+        mail: 'julienbutty+23@gmail.com'
+        address: '70 grande rue, 69340 Francheville'
+        phone: '0607080906'
+        client: '@client2'
+
+
+
+
+
+
+
