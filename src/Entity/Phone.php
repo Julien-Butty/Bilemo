@@ -3,9 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
+ *
+ * @ExclusionPolicy("all")
  */
 class Phone
 {
@@ -13,56 +18,67 @@ class Phone
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Expose()
      */
     private $id;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose()
      */
     private $brand;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose()
      */
     private $model;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose()
      */
     private $plateform;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose()
      */
     private $color;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose()
      */
     private $weight;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose()
      */
     private $dimensions;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose()
      */
     private $sim;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose()
      */
     private $displaySize;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose()
      */
     private $memory;
 
     /**
      * @ORM\Column(type="string")
+     * @Expose()
      */
     private $camera;
 
