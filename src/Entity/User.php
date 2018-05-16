@@ -3,9 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
+ * @ExclusionPolicy("all")
  */
 class User
 {
@@ -13,31 +18,44 @@ class User
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @Serializer\Expose()
      */
     private $id;
 
     /**
      * @ORM\Column(type="string")
+     * @Serializer\Expose()
+     * @Assert\NotBlank()
+     *
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string")
+     * @Serializer\Expose()
+     * @Assert\NotBlank()
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string")
+     * @Serializer\Expose()
+     * @Assert\NotBlank()
      */
     private $mail;
 
     /**
      * @ORM\Column(type="string")
+     * @Serializer\Expose()
+     * @Assert\NotBlank()
      */
     private $address;
 
     /**
      * @ORM\Column(type="string")
+     * @Serializer\Expose()
+     * @Assert\NotBlank()
      */
     private $phone;
 
