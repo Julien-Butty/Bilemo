@@ -14,7 +14,7 @@ class PhoneRepository extends AbstractRepository
         $qb = $this
             ->createQueryBuilder('a')
             ->select('a')
-            ->orderBy('a.brand')
+            ->orderBy('a.brand', $order)
             ;
 
         if ($term) {

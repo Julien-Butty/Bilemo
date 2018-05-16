@@ -16,7 +16,7 @@ class PhoneController extends FOSRestController
      * @Rest\Get("/phones", name="phone_list")
      * @Rest\QueryParam(
      *     name="keyword",
-     *     requirements="[a-zA-Z0-9]",
+     *     requirements="\w+",
      *     nullable=true,
      *     description="The keyword to search for."
      * )
@@ -50,6 +50,8 @@ class PhoneController extends FOSRestController
             $paramFetcher->get('offset')
         );
 
+//        echo $paramFetcher->get('keyword');
+//        exit();
         return new Phones($pager);
     }
 
