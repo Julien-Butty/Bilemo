@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -62,10 +63,51 @@ class UserController extends FOSRestController
         $em->flush();
 
         return $user;
-//        return $this->view($user, Response::HTTP_CREATED, ['Location' => $this->generateUrl(
-//            'user_show', ['id' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL
-//        )]);
+    }
 
+
+    /**
+     * @Rest\Put(
+     *     path="/users/{id}",
+     *     name="users_update",
+     *     requirements = { "id" = "\d+" }
+     * )
+     * @Rest\View(statusCode=200)
+     * @ParamConverter("newUser", converter="fos_rest.request_body")
+     */
+    public function updateAction(User $user, User $newUser, ConstraintViolationList $validationErrors)
+    {
+        if (count($validationErrors)) {
+            return $this->view($validationErrors, Response::HTTP_BAD_REQUEST);
+        }
+
+        $user->setFirstName($newUser->getFirstName());
+        $user->setLastName($newUser->getLastName());
+        $user->setMail($newUser->getMail());
+        $user->setAddress($newUser->getAddress());
+        $user->setPhone($newUser->getPhone());
+
+        $this->getDoctrine()->getManager()->flush();
+
+
+        return $user;
+    }
+
+    /**
+     * @Rest\Delete(
+     *     path="users/{id}",
+     *     name="users_delete",
+     *     requirements={"id" = "\d+"}
+     *     )
+     * @Rest\View(statusCode= 204)
+     */
+    public function deleteAction(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+
+        return;
     }
 
 }
