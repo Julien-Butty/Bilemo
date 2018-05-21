@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Representation\Users;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,29 +16,58 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 
+
 class UserController extends FOSRestController
 {
 
     /**
      * @Rest\Get("/users", name="user_list")
+     *
+     * @Rest\QueryParam(
+     *     name="keyword",
+     *     requirements="\w+",
+     *     nullable=true,
+     *     description="The keyword to search for."
+     * )
+     * @Rest\QueryParam(
+     *     name="order",
+     *     requirements="asc|desc",
+     *     default="asc",
+     *     description="Sort order (asc or desc)."
+     * )
+     * @Rest\QueryParam(
+     *     name="limit",
+     *     requirements="\d+",
+     *     default="15",
+     *     description="Max number of phone per page."
+     * )
+     * @Rest\QueryParam(
+     *     name="offset",
+     *     requirements="\d+",
+     *     default="0",
+     *     description="The pagination offset"
+     * )
      * @Rest\View()
      */
-    public function listAction()
+    public function listAction(ParamFetcherInterface $paramFetcher)
     {
-        $user = $this->getDoctrine()->getRepository('App:User')->findAll();
-        $data = $this->get('jms_serializer')->serialize($user, 'json');
 
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
+        $pager = $this->getDoctrine()->getRepository('App:User')->search(
+            $paramFetcher->get('keyword'),
+            $paramFetcher->get('order'),
+            $paramFetcher->get('limit'),
+            $paramFetcher->get('offset')
+        );
 
-        return $response;
+        return new Users($pager);
     }
 
     /**
+     *
      * @Rest\Get(
      *     path="/users/{id}",
      *     name="user_show",
-     *     requirements={"id"="\d+"}
+     *     requirements={ "id" = "\d+" }
      * )
      * @Rest\View(
      *     statusCode= 200
@@ -48,7 +79,10 @@ class UserController extends FOSRestController
     }
 
     /**
-     * @Rest\Post("/users")
+     * @Rest\Post(
+     *     "/users",
+     *     name="user_create"
+     * )
      * @Rest\View(statusCode= 201)
      * @ParamConverter("user", converter= "fos_rest.request_body" )
      */
@@ -69,7 +103,7 @@ class UserController extends FOSRestController
     /**
      * @Rest\Put(
      *     path="/users/{id}",
-     *     name="users_update",
+     *     name="user_update",
      *     requirements = { "id" = "\d+" }
      * )
      * @Rest\View(statusCode=200)
@@ -96,7 +130,7 @@ class UserController extends FOSRestController
     /**
      * @Rest\Delete(
      *     path="users/{id}",
-     *     name="users_delete",
+     *     name="user_delete",
      *     requirements={"id" = "\d+"}
      *     )
      * @Rest\View(statusCode= 204)

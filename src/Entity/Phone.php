@@ -6,9 +6,27 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
+ *
+ * @Hateoas\Relation(
+ *     "list",
+ *     href=@Hateoas\Route(
+ *     "phone_list",
+ *     absolute = true
+ *     )
+ * )
+ *
+ * @Hateoas\Relation(
+ *     "self",
+ *     href=@Hateoas\Route(
+ *     "phone_show",
+ *     parameters={ "id" = "expr(object.getId())"},
+ *     absolute = true
+ *     )
+ * )
  *
  * @ExclusionPolicy("all")
  */
@@ -25,60 +43,70 @@ class Phone
     /**
      * @ORM\Column(type="string")
      * @Expose()
+     * @Serializer\Since("1.0")
      */
     private $brand;
 
     /**
      * @ORM\Column(type="string")
      * @Expose()
+     * @Serializer\Since("1.0")
      */
     private $model;
 
     /**
      * @ORM\Column(type="string")
      * @Expose()
+     * @Serializer\Since("1.0")
      */
     private $plateform;
 
     /**
      * @ORM\Column(type="string")
      * @Expose()
+     * @Serializer\Since("1.0")
      */
     private $color;
 
     /**
      * @ORM\Column(type="string")
      * @Expose()
+     * @Serializer\Since("1.0")
      */
     private $weight;
 
     /**
      * @ORM\Column(type="string")
      * @Expose()
+     * @Serializer\Since("1.0")
      */
     private $dimensions;
 
     /**
      * @ORM\Column(type="string")
      * @Expose()
+     * @Serializer\Since("1.0")
      */
     private $sim;
 
     /**
      * @ORM\Column(type="string")
      * @Expose()
+     * @Serializer\Since("1.0")
      */
     private $displaySize;
 
     /**
      * @ORM\Column(type="string")
      * @Expose()
+     * @Serializer\Since("1.0")
      */
     private $memory;
 
     /**
      * @ORM\Column(type="string")
      * @Expose()
+     * @Serializer\Since("1.0")
      */
     private $camera;
 
