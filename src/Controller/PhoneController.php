@@ -50,8 +50,6 @@ class PhoneController extends FOSRestController
             $paramFetcher->get('offset')
         );
 
-//        echo $paramFetcher->get('keyword');
-//        exit();
         return new Phones($pager);
     }
 

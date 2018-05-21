@@ -6,9 +6,54 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
+ * @Hateoas\Relation(
+ *     "list",
+ *     href=@Hateoas\Route(
+ *     "user_list",
+ *     absolute = true
+ *      )
+ * )
+ *
+ *@Hateoas\Relation(
+ *     "self",
+ *     href=@Hateoas\Route(
+ *     "user_show",
+ *     parameters={ "id" = "expr(object.getId())"},
+ *     absolute = true
+ *     )
+ * )
+ *
+ * @Hateoas\Relation(
+ *     "create",
+ *     href=@Hateoas\Route(
+ *     "user_create",
+ *     absolute = true
+ *     )
+ * )
+ *
+ * @Hateoas\Relation(
+ *     "update",
+ *     href=@Hateoas\Route(
+ *     "user_update",
+ *     parameters={ "id" = "expr(object.getId())"},
+ *     absolute = true
+ *     )
+ * )
+ *
+ *  @Hateoas\Relation(
+ *     "delete",
+ *     href=@Hateoas\Route(
+ *     "user_delete",
+ *     parameters={ "id" = "expr(object.getId())"},
+ *     absolute = true
+ *     )
+ * )
  *
  * @ExclusionPolicy("all")
  */
@@ -26,6 +71,8 @@ class User
     /**
      * @ORM\Column(type="string")
      * @Serializer\Expose()
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank()
      *
      */
@@ -34,6 +81,8 @@ class User
     /**
      * @ORM\Column(type="string")
      * @Serializer\Expose()
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank()
      */
     private $lastName;
@@ -41,6 +90,8 @@ class User
     /**
      * @ORM\Column(type="string")
      * @Serializer\Expose()
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank()
      */
     private $mail;
@@ -48,6 +99,8 @@ class User
     /**
      * @ORM\Column(type="string")
      * @Serializer\Expose()
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank()
      */
     private $address;
@@ -55,6 +108,8 @@ class User
     /**
      * @ORM\Column(type="string")
      * @Serializer\Expose()
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank()
      */
     private $phone;

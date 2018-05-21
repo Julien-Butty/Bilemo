@@ -25,3 +25,4 @@ fos_rest:
         resolvers:
             media_type: # Accept header
                 enabled: true
+                regex: '/(v|version)=(?P<version>[0-9\.]+)/'
