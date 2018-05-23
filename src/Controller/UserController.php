@@ -21,7 +21,7 @@ class UserController extends FOSRestController
 {
 
     /**
-     * @Rest\Get("/users", name="user_list")
+     * @Rest\Get("/api/users", name="user_list")
      *
      * @Rest\QueryParam(
      *     name="keyword",
@@ -65,7 +65,7 @@ class UserController extends FOSRestController
     /**
      *
      * @Rest\Get(
-     *     path="/users/{id}",
+     *     path="api/users/{id}",
      *     name="user_show",
      *     requirements={ "id" = "\d+" }
      * )
@@ -80,7 +80,7 @@ class UserController extends FOSRestController
 
     /**
      * @Rest\Post(
-     *     "/users",
+     *     "/api/users",
      *     name="user_create"
      * )
      * @Rest\View(statusCode= 201)
@@ -102,7 +102,7 @@ class UserController extends FOSRestController
 
     /**
      * @Rest\Put(
-     *     path="/users/{id}",
+     *     path="/api/users/{id}",
      *     name="user_update",
      *     requirements = { "id" = "\d+" }
      * )
@@ -129,7 +129,7 @@ class UserController extends FOSRestController
 
     /**
      * @Rest\Delete(
-     *     path="users/{id}",
+     *     path="/api/users/{id}",
      *     name="user_delete",
      *     requirements={"id" = "\d+"}
      *     )

@@ -13,7 +13,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 class PhoneController extends FOSRestController
 {
     /**
-     * @Rest\Get("/phones", name="phone_list")
+     * @Rest\Get("/api/phones", name="phone_list")
      * @Rest\QueryParam(
      *     name="keyword",
      *     requirements="\w+",
@@ -55,7 +55,7 @@ class PhoneController extends FOSRestController
 
     /**
      * @Rest\Get(
-     *     path="/phones/{id}",
+     *     path="/api/phones/{id}",
      *     name="phone_show",
      *     requirements={"id"="\d+"}
      * )
