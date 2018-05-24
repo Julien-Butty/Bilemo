@@ -28,6 +28,11 @@ class Client implements UserInterface, \Serializable
     private $password;
 
     /**
+     * @var string
+     */
+    private $plainPassword;
+
+    /**
      * @ORM\Column(type="string")
      */
     private $email;
@@ -76,6 +81,25 @@ class Client implements UserInterface, \Serializable
     }
 
     /**
+     * @return string
+     */
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword(string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+        $this->password = null;
+    }
+
+
+
+    /**
      * @return mixed
      */
     public function getEmail()
@@ -119,7 +143,7 @@ class Client implements UserInterface, \Serializable
 
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = null;
     }
 
     /**

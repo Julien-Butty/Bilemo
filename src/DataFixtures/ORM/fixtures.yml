@@ -41,17 +41,17 @@ App\Entity\Client:
 
     client1:
         username: 'fnak'
-        password: '123456'
+        plainPassword: '123456'
         email: 'julienbutty@gmail.com'
 
     client2:
         username: 'barty'
-        password: '654321'
+        plainPassword: '654321'
         email: 'julienbutty+1@gmail.com'
 
     client3:
         username: 'fonHouse'
-        password: '741852'
+        plainPassword: '741852'
         email: 'julienbutty+2@gmail.com'
 
 

@@ -6,9 +6,12 @@ security:
         App\Entity\User:
             algorithm: bcrypt
 
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
 
     providers:
-        entity_provider:
+        user:
             entity:
                 class: App\Entity\Client
                 property: username
@@ -19,7 +22,7 @@ security:
             pattern: ^/api/login
             stateless: true
             anonymous: true
-            json_login:
+            form_login:
                 check_path:               /api/login_check
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
@@ -28,7 +31,6 @@ security:
         api:
             pattern: ^/api/
             stateless: true
-            provider: entity_provider
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
