@@ -1,6 +1,7 @@
 <?php
 
 use App\Kernel;
+use App\CacheKernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +33,9 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? false) {
     Request::setTrustedHosts(explode(',', $trustedHosts));
 }
 
-$kernel = new Kernel($env, $debug);
+$kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev')));
+
+$kernel = new CacheKernel($kernel);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();

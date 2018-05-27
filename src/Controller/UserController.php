@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Representation\Users;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Hateoas\Representation\CollectionRepresentation;
+use Hateoas\Representation\PaginatedRepresentation;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,23 +25,23 @@ class UserController extends FOSRestController
     /**
      * @Rest\Get("/api/users", name="user_list")
      *
-     * @Rest\QueryParam(
+     *@Rest\QueryParam(
      *     name="keyword",
      *     requirements="\w+",
-     *     nullable=true,
-     *     description="The keyword to search for."
+     *     nullable= true,
+     *     description="The keyword to search for"
      * )
      * @Rest\QueryParam(
      *     name="order",
-     *     requirements="asc|desc",
+     *     requirements="asc|dsc",
      *     default="asc",
-     *     description="Sort order (asc or desc)."
+     *     description="Sort of order (asc or desc)"
      * )
      * @Rest\QueryParam(
      *     name="limit",
      *     requirements="\d+",
-     *     default="15",
-     *     description="Max number of phone per page."
+     *     default="20",
+     *     description="Max number of categories per page"
      * )
      * @Rest\QueryParam(
      *     name="offset",
@@ -47,19 +49,41 @@ class UserController extends FOSRestController
      *     default="0",
      *     description="The pagination offset"
      * )
+     *
      * @Rest\View()
+     *
+     * @Cache(expires="+7 days", public=true)
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
 
-        $pager = $this->getDoctrine()->getRepository('App:User')->search(
-            $paramFetcher->get('keyword'),
-            $paramFetcher->get('order'),
-            $paramFetcher->get('limit'),
-            $paramFetcher->get('offset')
-        );
+            $users = $this->getDoctrine()->getRepository('App:User')->search(
+                $paramFetcher->get('keyword'),
+                $paramFetcher->get('order'),
+                $paramFetcher->get('limit'),
+                $paramFetcher->get('offset')
+            );
 
-        return new Users($pager);
+            $paginatedCollection = new PaginatedRepresentation(
+                new CollectionRepresentation(
+                    $users->getCurrentPageResults(),
+                    'users',
+                    'users'
+                ),
+                'user_list',
+                array(),
+                $users->getCurrentPage(),
+                $users->getMaxPerPage(),
+                $users->getNbPages(),
+                'page',
+                'limit',
+                true,
+                $users->getNbResults()
+            );
+
+            return $paginatedCollection;
+
+
     }
 
     /**
@@ -72,6 +96,8 @@ class UserController extends FOSRestController
      * @Rest\View(
      *     statusCode= 200
      * )
+     *
+     * @Cache(expires="+7 days", public=true)
      */
     public function showAction(User $user)
     {
@@ -108,6 +134,7 @@ class UserController extends FOSRestController
      * )
      * @Rest\View(statusCode=200)
      * @ParamConverter("newUser", converter="fos_rest.request_body")
+     *
      */
     public function updateAction(User $user, User $newUser, ConstraintViolationList $validationErrors)
     {

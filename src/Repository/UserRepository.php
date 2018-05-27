@@ -5,11 +5,13 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Repository\AbstractRepository;
 
 
 class UserRepository extends AbstractRepository
 {
-    public function search($term, $order= 'asc', $limit=20, $offset = 0)
+
+    public function search($term, $order= 'asc', $limit = 20, $offset = 0)
     {
         $qb = $this
             ->createQueryBuilder('a')
@@ -24,6 +26,6 @@ class UserRepository extends AbstractRepository
             ;
         }
 
-        return $this->paginate($qb, $limit, $offset);
+        return $this->paginate($qb,$limit,$offset);
     }
 }
