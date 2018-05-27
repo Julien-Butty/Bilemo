@@ -9,21 +9,21 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class PhoneRepository extends AbstractRepository
 {
-    public function search($term, $order= 'asc', $limit=20, $offset = 0)
+    public function search($term, $order= 'asc', $limit = 20, $offset = 0)
     {
         $qb = $this
             ->createQueryBuilder('a')
             ->select('a')
-            ->orderBy('a.brand', $order)
-            ;
+            ->orderBy('a.id', $order)
+        ;
 
         if ($term) {
             $qb
                 ->where('a.brand LIKE ?1')
                 ->setParameter(1, '%'.$term.'%')
-                ;
+            ;
         }
 
-        return $this->paginate($qb, $limit, $offset);
+        return $this->paginate($qb,$limit,$offset);
     }
 }

@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Phone;
-use App\Representation\Phones;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-
+use Hateoas\Representation\CollectionRepresentation;
+use Hateoas\Representation\PaginatedRepresentation;
 
 
 class PhoneController extends FOSRestController
@@ -39,18 +39,39 @@ class PhoneController extends FOSRestController
      *     description="The pagination offset"
      * )
      * @Rest\View()
+     *
+     * @Cache(expires="+7 days", public=true)
      */
     public function listAction(ParamFetcherInterface $paramFetcher)
     {
 
-        $pager = $this->getDoctrine()->getRepository('App:Phone')->search(
+        $phones = $this->getDoctrine()->getRepository('App:Phone')->search(
             $paramFetcher->get('keyword'),
             $paramFetcher->get('order'),
             $paramFetcher->get('limit'),
             $paramFetcher->get('offset')
         );
 
-        return new Phones($pager);
+        $paginatedCollection =  new PaginatedRepresentation(
+            new CollectionRepresentation(
+                $phones->getCurrentPageResults(),
+                'phones',
+                'phones'
+            ),
+            'phone_list',
+            array(),
+            $phones->getCurrentPage(),
+            $phones->getMaxPerPage(),
+            $phones->getNbPages(),
+            'page',
+            'limit',
+            true,
+            $phones->getNbResults()
+        );
+
+        return $paginatedCollection;
+
+        return new Phones();
     }
 
     /**
@@ -62,6 +83,8 @@ class PhoneController extends FOSRestController
      * @Rest\View(
      *     statusCode= 200
      * )
+     *
+     * @Cache(expires="+7 days", public=true)
      */
     public function showAction(Phone $phone)
     {
