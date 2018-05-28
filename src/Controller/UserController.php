@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
+use App\Handler\UserHandler;
 
 
 class UserController extends FOSRestController
@@ -114,15 +115,9 @@ class UserController extends FOSRestController
      */
     public function createAction(User $user, ConstraintViolationList $validationErrors)
     {
-        if (count($validationErrors)) {
-            return $this->view($validationErrors, Response::HTTP_BAD_REQUEST);
-        }
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
 
-        return $user;
+        return $this->get('app.user_handler')->create($user, $validationErrors);
     }
 
 
@@ -138,17 +133,7 @@ class UserController extends FOSRestController
      */
     public function updateAction(User $user, User $newUser, ConstraintViolationList $validationErrors)
     {
-        if (count($validationErrors)) {
-            return $this->view($validationErrors, Response::HTTP_BAD_REQUEST);
-        }
-
-        $user->setFirstName($newUser->getFirstName());
-        $user->setLastName($newUser->getLastName());
-        $user->setMail($newUser->getMail());
-        $user->setAddress($newUser->getAddress());
-        $user->setPhone($newUser->getPhone());
-
-        $this->getDoctrine()->getManager()->flush();
+        return $this->get('app.user_handler')->update($user, $newUser, $validationErrors);
 
 
         return $user;

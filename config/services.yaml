@@ -41,3 +41,16 @@ services:
     App\Doctrine\HashPasswordListener:
         tags:
             - { name: doctrine.event_subscriber }
+
+
+    App\Handler\UserHandler:
+        tags:
+            - { name: app.user_handler }
+        arguments: [ "@doctrine.orm.entity_manager" ]
+
+    app.user_handler:
+        public: true
+        class: App\Handler\UserHandler
+        arguments:
+            - '@doctrine.orm.entity_manager'
+

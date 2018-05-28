@@ -2,9 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Phone;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 
 class PhoneRepository extends AbstractRepository
@@ -19,7 +16,17 @@ class PhoneRepository extends AbstractRepository
 
         if ($term) {
             $qb
-                ->where('a.brand LIKE ?1')
+                ->where(('a.brand LIKE ?1
+                    OR a.model LIKE ?1
+                    OR a.plateform LIKE ?1
+                    OR a.color LIKE ?1
+                    OR a.weight LIKE ?1
+                    OR a.dimensions LIKE ?1
+                    OR a.sim LIKE ?1
+                    OR a.displaySize LIKE ?1
+                    OR a.memory LIKE ?1
+                    OR a.camera LIKE ?1')
+                )
                 ->setParameter(1, '%'.$term.'%')
             ;
         }
