@@ -18,6 +18,10 @@ security:
 
 
     firewalls:
+        api_doc:
+            pattern: ^/api/doc
+            security: false
+
         login:
             pattern: ^/api/login
             stateless: true
@@ -34,6 +38,7 @@ security:
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
+
 
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
