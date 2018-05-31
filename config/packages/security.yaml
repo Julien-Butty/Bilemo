@@ -18,6 +18,10 @@ security:
 
 
     firewalls:
+
+        register:
+            pattern: ^/api/register
+            security: false
         api_doc:
             pattern: ^/api/doc
             security: false

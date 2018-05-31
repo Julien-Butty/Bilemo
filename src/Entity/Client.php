@@ -3,10 +3,22 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
+ *
+ * @Hateoas\Relation(
+ *     "register",
+ *     href=@Hateoas\Route(
+ *     "register",
+ *     absolute=true
+ * )
+ * )
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class Client implements UserInterface, \Serializable
 {
@@ -14,11 +26,14 @@ class Client implements UserInterface, \Serializable
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @Serializer\Expose()
      */
     private $id;
 
     /**
      * @ORM\Column(type="string")
+     * @Serializer\Expose()
      */
     private $username;
 
@@ -29,11 +44,16 @@ class Client implements UserInterface, \Serializable
 
     /**
      * @var string
+     * @Serializer\Expose()
+     *
+     * @Serializer\Type("string")
+     *
      */
     private $plainPassword;
 
     /**
      * @ORM\Column(type="string")
+     * @Serializer\Expose()
      */
     private $email;
 
@@ -154,7 +174,7 @@ class Client implements UserInterface, \Serializable
         return serialize(array(
             $this->id,
             $this->username,
-            $this->password,
+            $this->plainPassword,
             // see section on salt below
             // $this->salt,
         ));
@@ -169,7 +189,7 @@ class Client implements UserInterface, \Serializable
         list(
             $this->id,
             $this->username,
-            $this->password,
+            $this->plainPassword,
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized);

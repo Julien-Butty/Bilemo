@@ -19,7 +19,7 @@ fos_rest:
     exception:
         enabled: true
         exception_controller: 'fos_rest.exception.controller:showAction'
-        codes: { Symfony\Component\HttpKernel\Exception\NotFoundHttpException: 404, FOS\RestBundle\Exception\InvalidParameterException: 400, \Exception: 500 }
+        codes: { Symfony\Component\HttpKernel\Exception\NotFoundHttpException: 404, FOS\RestBundle\Exception\InvalidParameterException: 400, \Exception: 400 }
         messages: { Symfony\Component\HttpKernel\Exception\NotFoundHttpException: true, FOS\RestBundle\Exception\InvalidParameterException: true, \Exception: true }
     versioning:
         enabled: true

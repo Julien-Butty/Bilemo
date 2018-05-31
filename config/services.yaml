@@ -48,9 +48,5 @@ services:
             - { name: app.user_handler }
         arguments: [ "@doctrine.orm.entity_manager" ]
 
-    app.user_handler:
-        public: true
-        class: App\Handler\UserHandler
-        arguments:
-            - '@doctrine.orm.entity_manager'
+
 

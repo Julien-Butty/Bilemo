@@ -29,6 +29,25 @@ class UserController extends FOSRestController
     /**
      * @Rest\Get("/api/users", name="user_list")
      *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return users's list",
+     *     @SWG\Schema(ref=@Model(type=User::class)),
+     * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="JWT Token not found | JWT Token not found | Invalid JWT Token",
+     * )
+     * @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     default="Bearer Token",
+     *     description="Bearer {your access token}",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Tag(name="Users")
+     *
      *@Rest\QueryParam(
      *     name="keyword",
      *     requirements="\w+",
@@ -91,12 +110,42 @@ class UserController extends FOSRestController
     }
 
     /**
-     *
      * @Rest\Get(
      *     path="api/users/{id}",
      *     name="user_show",
      *     requirements={ "id" = "\d+" }
      * )
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return the selected user",
+     *     @SWG\Schema(ref=@Model(type=User::class))
+     * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="JWT Token not found | JWT Token not found | Invalid JWT Token",
+     * )
+     * @SWG\Response(
+     *     response="404",
+     *     description="Object not found or does not exist",
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     description="The user id.",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     default="Bearer Token",
+     *     description="Bearer {your access token}",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Tag(name="Users")
+     *
      * @Rest\View(
      *     statusCode= 200
      * )
@@ -110,17 +159,39 @@ class UserController extends FOSRestController
 
     /**
      * @Rest\Post(
-     *     "/api/users",
+     *     path="/api/users",
      *     name="user_create"
      * )
+     *
+     * @SWG\Response(
+     *     response=201,
+     *     description="Create user",
+     *     @SWG\Schema(ref=@Model(type=User::class))
+     * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="JWT Token not found | JWT Token not found | Invalid JWT Token",
+     * )
+     * @SWG\Response(
+     *     response="400",
+     *     description="A violation is raised by validation",
+     * )
+     * @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     default="Bearer Token",
+     *     description="Bearer {your access token}",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Tag(name="Users")
+     *
      * @Rest\View(statusCode= 201)
      * @ParamConverter("user", converter= "fos_rest.request_body" )
      */
-    public function createAction(User $user, ConstraintViolationList $validationErrors)
+    public function createAction(User $user, ConstraintViolationList $validationErrors, UserHandler $handler)
     {
-
-
-        return $this->get('app.user_handler')->create($user, $validationErrors);
+        return $handler->create($user, $validationErrors);
     }
 
 
@@ -130,13 +201,48 @@ class UserController extends FOSRestController
      *     name="user_update",
      *     requirements = { "id" = "\d+" }
      * )
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Update selected user",
+     *     @SWG\Schema(ref=@Model(type=User::class))
+     * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="JWT Token not found | JWT Token not found | Invalid JWT Token",
+     * )
+     * @SWG\Response(
+     *     response="400",
+     *     description="A violation is raised by validation",
+     * )
+     * @SWG\Response(
+     *     response="404",
+     *     description="Object not found or does not exist",
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     description="The user id.",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     default="Bearer Token",
+     *     description="Bearer {your access token}",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Tag(name="Users")
+     *
      * @Rest\View(statusCode=200)
      * @ParamConverter("newUser", converter="fos_rest.request_body")
      *
      */
-    public function updateAction(User $user, User $newUser, ConstraintViolationList $validationErrors)
+    public function updateAction(User $user, User $newUser, ConstraintViolationList $validationErrors, UserHandler $handler)
     {
-        return $this->get('app.user_handler')->update($user, $newUser, $validationErrors);
+        return $handler->update($user, $newUser, $validationErrors);
 
 
         return $user;
@@ -148,6 +254,41 @@ class UserController extends FOSRestController
      *     name="user_delete",
      *     requirements={"id" = "\d+"}
      *     )
+     *
+     * @SWG\Response(
+     *     response=204,
+     *     description="Delete selected user",
+     *     @SWG\Schema(ref=@Model(type=User::class))
+     * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="JWT Token not found | JWT Token not found | Invalid JWT Token",
+     * )
+     * @SWG\Response(
+     *     response="400",
+     *     description="A violation is raised by validation",
+     * )
+     *  @SWG\Response(
+     *     response="404",
+     *     description="Object not found or does not exist",
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     description="The user id.",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     default="Bearer Token",
+     *     description="Bearer {your access token}",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Tag(name="Users")
+     *
      * @Rest\View(statusCode= 204)
      */
     public function deleteAction(User $user)

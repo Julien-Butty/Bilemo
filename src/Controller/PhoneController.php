@@ -8,13 +8,35 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Hateoas\Representation\CollectionRepresentation;
 use Hateoas\Representation\PaginatedRepresentation;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Swagger\Annotations as SWG;
 
 
 class PhoneController extends FOSRestController
 {
     /**
      * @Rest\Get("/api/phones", name="phone_list")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return phones's list",
+     *     @SWG\Schema(@Model(type=Phone::class))
+     * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="JWT Token not found | JWT Token not found | Invalid JWT Token",
+     * )
+     * @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     default="Bearer Token",
+     *     description="Bearer {your access token}",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Tag(name="Phones")
+     *
      * @Rest\QueryParam(
      *     name="keyword",
      *     requirements="\w+",
@@ -81,6 +103,37 @@ class PhoneController extends FOSRestController
      *     name="phone_show",
      *     requirements={"id"="\d+"}
      * )
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return the selected phone",
+     *     @SWG\Schema(ref=@Model(type=Phone::class))
+     * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="JWT Token not found | JWT Token not found | Invalid JWT Token",
+     * )
+     * @SWG\Response(
+     *     response="404",
+     *     description="Object not found or does not exist",
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     description="The phone id.",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     default="Bearer Token",
+     *     description="Bearer {your access token}",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Tag(name="Phones")
+     *
      * @Rest\View(
      *     statusCode= 200
      * )
