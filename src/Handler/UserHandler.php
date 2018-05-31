@@ -54,5 +54,7 @@ class UserHandler extends AbstractHandler
 
         $this->entityManager->flush();
 
+        return $user;
+
     }
 }

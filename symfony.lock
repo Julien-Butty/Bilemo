@@ -68,6 +68,9 @@
     "doctrine/orm": {
         "version": "v2.6.1"
     },
+    "exsyst/swagger": {
+        "version": "v0.4.0"
+    },
     "friendsofsymfony/rest-bundle": {
         "version": "2.2",
         "recipe": {
@@ -79,15 +82,6 @@
     },
     "fzaninotto/faker": {
         "version": "v1.7.1"
-    },
-    "hautelook/alice-bundle": {
-        "version": "1.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.4",
-            "ref": "3447d538661064626c782b1122a14defa48dc0b1"
-        }
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
@@ -137,6 +131,15 @@
             "ref": "5ef2976310e8f9621c1a722a73bfbe115c1559a3"
         }
     },
+    "nelmio/api-doc-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "c8e0c38e1a280ab9e37587a8fa32b251d5bc1c94"
+        }
+    },
     "nelmio/cors-bundle": {
         "version": "1.5",
         "recipe": {
@@ -160,6 +163,15 @@
     },
     "phpcollection/phpcollection": {
         "version": "0.5.0"
+    },
+    "phpdocumentor/reflection-common": {
+        "version": "1.0.1"
+    },
+    "phpdocumentor/reflection-docblock": {
+        "version": "4.3.0"
+    },
+    "phpdocumentor/type-resolver": {
+        "version": "0.4.0"
     },
     "phpoption/phpoption": {
         "version": "1.5.0"
@@ -193,6 +205,9 @@
             "version": "1.0",
             "ref": "c82bead70f9a4f656354a193df7bf0ca2114efa0"
         }
+    },
+    "symfony/asset": {
+        "version": "v4.0.11"
     },
     "symfony/cache": {
         "version": "v4.0.9"
@@ -296,6 +311,9 @@
     "symfony/orm-pack": {
         "version": "v1.0.5"
     },
+    "symfony/polyfill-ctype": {
+        "version": "v1.8.0"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.8.0"
     },
@@ -313,6 +331,9 @@
     },
     "symfony/property-access": {
         "version": "v4.0.9"
+    },
+    "symfony/property-info": {
+        "version": "v4.0.11"
     },
     "symfony/routing": {
         "version": "4.0",
@@ -389,11 +410,11 @@
     "symfony/yaml": {
         "version": "v4.0.9"
     },
-    "theofidry/alice-data-fixtures": {
-        "version": "v1.0.1"
-    },
     "twig/twig": {
         "version": "v2.4.8"
+    },
+    "webmozart/assert": {
+        "version": "1.3.0"
     },
     "white-october/pagerfanta-bundle": {
         "version": "v1.1.3"
@@ -415,5 +436,8 @@
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.1"
+    },
+    "zircote/swagger-php": {
+        "version": "2.0.13"
     }
 }

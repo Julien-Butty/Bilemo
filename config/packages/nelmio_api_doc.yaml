@@ -1,0 +1,84 @@
+nelmio_api_doc:
+    documentation:
+            host: localhost/api/
+            schemes: [http, https]
+            info:
+                title: Bilemo
+                description: Integrate our phones database and manage your users
+                version: 1.0.0
+            securityDefinitions:
+                Bearer:
+                    type: apiKey
+                    description: 'Value: Bearer {jwt}'
+                    name: Authorization
+                    in: header
+            security:
+                - Bearer: []
+
+            paths:
+                  '/api/login_check':
+                    post:
+                      tags:
+                        - Authentication
+                      summary: "Get your token for authentication."
+                      description: |
+                        You have to paste your username and your password:
+                        ``````
+                        {
+                          "_username": "your_username",
+                          "_password": "your_password",
+
+                        }
+                        ``````
+                      consumes:
+                        - application/json
+                      parameters:
+                        - in: "body"
+                          name: "body"
+                          description: "Parameters needed to get your access_token"
+                          required: true
+
+                      responses:
+                        '200':
+                          description: Successful operation
+
+                        '400':
+                          description: Bad request
+                  '/api/register':
+                      post:
+                        tags:
+                            - { name: Register }
+                        summary: "Create your Bilemo account."
+                        description: |
+                          Create your account with a username, a password and your mail:
+                          ``````
+                          {
+                            "_username": "your_username",
+                            "_password": "your_password",
+                            "mail": "your_mail"
+
+                          }
+                          ``````
+                  '/api/users/{id}':
+                      get:
+                        summary: "Get a user profile "
+                      put:
+                        summary: "Update a user profile"
+                      delete:
+                        summary: "Delete a user profile"
+                  '/api/users':
+                      get:
+                        summary: "Get users list"
+                      post:
+                        summary: "Create a user profile"
+
+                  '/api/phones/{id}':
+                      get:
+                        summary: "Get a phone spec sheet "
+                  '/api/phones':
+                      get:
+                        summary: "Get phones list"
+    areas:
+        path_patterns:
+            - ^/api(?!/doc$)
+
