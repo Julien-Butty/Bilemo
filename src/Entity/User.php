@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
+use Swagger\Annotations as SWG;
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
 
@@ -53,6 +54,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     parameters={ "id" = "expr(object.getId())"},
  *     absolute = true
  *     )
+ * )
+ *
+ * @SWG\Definition(
+ *     definition="newUser",
+ *     type="object",
+ *     required={"name"}
  * )
  *
  * @ExclusionPolicy("all")
@@ -219,6 +226,19 @@ class User
     {
         $this->client = $client;
     }
+    /**
+     *  @SWG\Definition(
+     *   definition="User",
+     *   type="object",
+     *   allOf={
+     *       @SWG\Schema(ref="#/definitions/newUser"),
+     *       @SWG\Schema(
+     *           required={"id"},
+     *           @SWG\Property(property="id", format="int64", type="integer")
+     *       )
+     *   }
+     * )
+     */
 
 
 }

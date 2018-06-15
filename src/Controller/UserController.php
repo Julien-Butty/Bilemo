@@ -10,13 +10,7 @@ use Hateoas\Representation\CollectionRepresentation;
 use Hateoas\Representation\PaginatedRepresentation;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 use App\Handler\UserHandler;
 use Swagger\Annotations as SWG;
@@ -166,7 +160,6 @@ class UserController extends FOSRestController
      * @SWG\Response(
      *     response=201,
      *     description="Create user",
-     *     @SWG\Schema(ref=@Model(type=User::class))
      * )
      * @SWG\Response(
      *     response="401",
@@ -176,7 +169,7 @@ class UserController extends FOSRestController
      *     response="400",
      *     description="A violation is raised by validation",
      * )
-     * @SWG\Parameter(
+     * * @SWG\Parameter(
      *     name="Authorization",
      *     in="header",
      *     default="Bearer Token",
@@ -184,6 +177,12 @@ class UserController extends FOSRestController
      *     required=true,
      *     type="string"
      * )
+     * @SWG\Parameter(
+     *     name="body",
+     *     in="body",
+     *     @SWG\Schema(type="object",
+     *          @SWG\Property(property="user", ref=@Model(type=User::class)))
+     *)
      * @SWG\Tag(name="Users")
      *
      * @Rest\View(statusCode= 201)
@@ -234,6 +233,12 @@ class UserController extends FOSRestController
      *     required=true,
      *     type="string"
      * )
+     * @SWG\Parameter(
+     *     name="body",
+     *     in="body",
+     *     @SWG\Schema(type="object",
+     *          @SWG\Property(property="user", ref=@Model(type=User::class)))
+     *)
      * @SWG\Tag(name="Users")
      *
      * @Rest\View(statusCode=200)
@@ -258,7 +263,6 @@ class UserController extends FOSRestController
      * @SWG\Response(
      *     response=204,
      *     description="Delete selected user",
-     *     @SWG\Schema(ref=@Model(type=User::class))
      * )
      * @SWG\Response(
      *     response="401",

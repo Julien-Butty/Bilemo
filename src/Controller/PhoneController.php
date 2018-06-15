@@ -21,7 +21,7 @@ class PhoneController extends FOSRestController
      * @SWG\Response(
      *     response=200,
      *     description="Return phones's list",
-     *     @SWG\Schema(@Model(type=Phone::class))
+     *     @SWG\Schema(ref=@Model(type=Phone::class))
      * )
      * @SWG\Response(
      *     response="401",
