@@ -30,7 +30,7 @@ class SetUpTest extends WebTestCase
             )
         );
         $data = json_decode($client->getResponse()->getContent(), true);
-        print_r($data);
+
 
         $client = static::createClient();
         $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));

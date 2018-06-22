@@ -19,6 +19,8 @@
         <env name="JWT_PRIVATE_KEY_PATH" value="config/jwt/private.pem"/>
         <env name="JWT_PUBLIC_KEY_PATH" value="config/jwt/public.pem"/>
         <env name="JWT_PASSPHRASE" value="Madsoul"/>
+        <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1:8889/Bilemo"/>
+
     </php>
 
     <testsuites>
