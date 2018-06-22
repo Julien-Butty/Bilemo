@@ -33,9 +33,14 @@ nelmio_api_doc:
                       consumes:
                         - application/json
                       parameters:
-                        - in: "body"
-                          name: "body"
-                          description: "Parameters needed to get your access_token"
+                        - in: "_username"
+                          name: "Username"
+                          description: "The username you chose when you have registered your account"
+                          required: true
+
+                        - in: "_password"
+                          name: "Password"
+                          description: "The password you chose when you have registered your account"
                           required: true
 
                       responses:
@@ -44,21 +49,7 @@ nelmio_api_doc:
 
                         '400':
                           description: Bad request
-                  '/api/register':
-                      post:
-                        tags:
-                            - { name: Register }
-                        summary: "Create your Bilemo account."
-                        description: |
-                          Create your account with a username, a password and your mail:
-                          ``````
-                          {
-                            "_username": "your_username",
-                            "_password": "your_password",
-                            "mail": "your_mail"
 
-                          }
-                          ``````
                   '/api/users/{id}':
                       get:
                         summary: "Get a user profile "
@@ -78,6 +69,8 @@ nelmio_api_doc:
                   '/api/phones':
                       get:
                         summary: "Get phones list"
+
+
     areas:
         path_patterns:
             - ^/api(?!/doc$)
