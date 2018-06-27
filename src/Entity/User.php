@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Annotations\Annotation\Required;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
@@ -79,6 +80,7 @@ class User
      * @ORM\Column(type="string")
      * @Serializer\Expose()
      * @Serializer\Since("1.0")
+     * @Required()
      *
      * @Assert\NotBlank()
      *
@@ -226,19 +228,5 @@ class User
     {
         $this->client = $client;
     }
-    /**
-     *  @SWG\Definition(
-     *   definition="User",
-     *   type="object",
-     *   allOf={
-     *       @SWG\Schema(ref="#/definitions/newUser"),
-     *       @SWG\Schema(
-     *           required={"id"},
-     *           @SWG\Property(property="id", format="int64", type="integer")
-     *       )
-     *   }
-     * )
-     */
-
 
 }

@@ -11,7 +11,7 @@ namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class SetUpTest extends WebTestCase
+class SetUp extends WebTestCase
 {
     /**
      * @param string $username

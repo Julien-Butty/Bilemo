@@ -9,9 +9,9 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Phone;
-use App\Tests\SetUpTest;
+use App\Tests\SetUp;
 
-class PhoneControllerTest extends SetUpTest
+class PhoneControllerTest extends SetUp
 {
 
 
@@ -33,24 +33,41 @@ class PhoneControllerTest extends SetUpTest
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $content = json_decode($client->getResponse()->getContent(), true);
-        $this->assertInternalType('array', $content);
+
     }
 
-//    public function testPhoneShow()
-//    {
-//        $phone = $this->createMock(Phone::class);
-//            $phone->method('getId')
-//                ->willReturn('1');
-//        $this->assertSame('1', $phone->getId());
-//
-//        $client = $this->createAuthenticatedClient();
-//        $id= $phone->getId();
-//        print_r($id);
-//        $client->request('GET', '/api/phones/'.$phone->getId());
-////
-//        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-//    }
+    public function testNoAuthPhoneShow()
+    {
+        $client = static::createClient();
+
+        $phone = $client->getContainer()->get('doctrine.orm.entity_manager')->getRepository(Phone::class)->findOneBy([]);
+        $id = $phone->getId();
+
+        $client->request('GET', '/api/phones/'.$id);
+
+        $this->assertEquals(401, $client->getResponse()->getStatusCode());
+    }
+
+    public function testPhoneShowAuth()
+    {
+        $client = $this->createAuthenticatedClient();
+
+        $phone = $client->getContainer()->get('doctrine.orm.entity_manager')->getRepository(Phone::class)->findOneBy([]);
+        $id = $phone->getId();
+
+        $client->request('GET', '/api/phones/'.$id);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testPhoneShowNoExist()
+    {
+        $client = $this->createAuthenticatedClient();
+
+        $client->request('GET', '/api/phones/500');
+
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+    }
 
 
 
