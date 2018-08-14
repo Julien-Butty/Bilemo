@@ -13,7 +13,7 @@ Installation
 ------------
 
 - Clone this repository: https://github.com/Julien-Butty/Bilemo.git
-- In your command line type these lines:
+- Open your command line and type this:
 
 `````
 composer install
