@@ -11,9 +11,11 @@ use Hateoas\Representation\PaginatedRepresentation;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationList;
 use App\Handler\UserHandler;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Response;
 
 
 
@@ -188,9 +190,16 @@ class UserController extends FOSRestController
      * @Rest\View(statusCode= 201)
      * @ParamConverter("user", converter= "fos_rest.request_body" )
      */
-    public function createAction(User $user, ConstraintViolationList $validationErrors, UserHandler $handler)
+    public function createAction(User $user, ConstraintViolationList $validationErrors, UserHandler $handler, Request $request)
     {
-        return $handler->create($user, $validationErrors);
+        $result = $handler->create($user, $validationErrors);
+
+        return $this->view($result, Response::HTTP_CREATED,[
+            'Location'=> $this->generateUrl(
+                $request->get('_route'),
+                ['id' => $user->getId()]
+            )
+        ]);
     }
 
 

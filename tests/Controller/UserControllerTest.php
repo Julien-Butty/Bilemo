@@ -11,6 +11,7 @@ namespace App\Tests\Controller;
 
 use App\Entity\User;
 use App\Tests\SetUp;
+use Symfony\Component\HttpFoundation\Response;
 
 
 
@@ -98,7 +99,7 @@ class UserControllerTest extends SetUp
         $client->request('POST', '/api/users',array(),array(),array('CONTENT_TYPE'=>'application/json'), json_encode($userTest));
 
         $response = $client->getResponse();
-        $this->assertEquals(201, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
     }
 
 
