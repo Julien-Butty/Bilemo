@@ -39,7 +39,6 @@ class UserTest extends TestCase
             'Client' => $client,
         ];
 
-        print_r($arrayTest);
 
         foreach ( $arrayTest as $key => $value) {
             $setter = 'set' . $key;

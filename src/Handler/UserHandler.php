@@ -21,6 +21,7 @@ use Symfony\Component\Validator\ConstraintViolationList;
 class UserHandler extends AbstractHandler
 {
     private $entityManager;
+    private $tokenStorage;
 
     public function __construct(EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage)
     {
@@ -29,6 +30,11 @@ class UserHandler extends AbstractHandler
     }
 
 
+    /**
+     * @param User $user
+     * @param ConstraintViolationList $validationErrors
+     * @return User
+     */
     public function create(User $user, ConstraintViolationList $validationErrors)
     {
         $this->validate($validationErrors);
