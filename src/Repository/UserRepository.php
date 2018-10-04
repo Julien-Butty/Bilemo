@@ -3,16 +3,17 @@
 namespace App\Repository;
 
 
-
 class UserRepository extends AbstractRepository
 {
 
-    public function search($term, $order = 'asc', $limit = 20, $offset = 0)
+    public function search($client, $term, $order = 'asc', $limit = 20, $offset = 0)
     {
         $qb = $this
             ->createQueryBuilder('a')
             ->select('a')
-            ->orderBy('a.id', $order);
+            ->orderBy('a.id', $order)
+            ->andWhere('a.client = :client')
+            ->setParameter('client', $client);
 
         if ($term) {
             $qb
@@ -24,6 +25,7 @@ class UserRepository extends AbstractRepository
                 ')
                 ->setParameter(1, '%' . $term . '%');
         }
+        $qb->getQuery()->useResultCache(true);
 
         return $this->paginate($qb, $limit, $offset);
     }

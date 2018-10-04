@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -12,6 +13,7 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 use App\Handler\UserHandler;
 use Swagger\Annotations as SWG;
@@ -21,6 +23,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends FOSRestController
 {
+
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
 
     /**
      * @Rest\Get("/api/users", name="user_list")
@@ -77,10 +89,12 @@ class UserController extends FOSRestController
     {
 
             $users = $this->getDoctrine()->getRepository('App:User')->search(
+                $this->tokenStorage->getToken()->getUser(),
                 $paramFetcher->get('keyword'),
                 $paramFetcher->get('order'),
                 $paramFetcher->get('limit'),
                 $paramFetcher->get('offset')
+
             );
 
             $paginatedCollection = new PaginatedRepresentation(

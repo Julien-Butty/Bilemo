@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "504ad69313bec2b77e18fccceaa85327",
+    "content-hash": "cb95d32234bd3e8a17e43a30b1a2b4d1",
     "packages": [
         {
             "name": "blackfire/php-sdk",
@@ -3852,6 +3852,7 @@
             ],
             "description": "Enforces Long Term Supported versions of Symfony components",
             "homepage": "https://symfony.com",
+            "abandoned": "symfony/flex",
             "time": "2018-04-03T05:04:16+00:00"
         },
         {
